@@ -1,6 +1,7 @@
 [workspace]
 resolver = "3"
 members = [
+    "components/qa-plugin-example",
     "components/qa-plugin-protocol",
     "components/qa-plugin-sdk",
 ]

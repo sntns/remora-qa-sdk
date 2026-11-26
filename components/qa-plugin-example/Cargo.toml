@@ -1,0 +1,24 @@
+[package]
+name = "remora-qa-plugin-example"
+version = "0.1.0"
+description = "Example Remora QA plugins: a probe and a disruptor"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "example-loadavg"
+path = "src/bin/example-loadavg.rs"
+
+[[bin]]
+name = "example-marker"
+path = "src/bin/example-marker.rs"
+
+[dependencies]
+remora-qa-plugin-sdk = { path = "../qa-plugin-sdk" }
+serde.workspace = true
+serde_json.workspace = true
