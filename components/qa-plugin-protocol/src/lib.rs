@@ -24,6 +24,23 @@
 //! reverts what it applied, then the process exits. A disruptor never
 //! outlives its agent with its change in place.
 //!
+//! # Rules every plugin and agent follow
+//!
+//! - The first message is `start` (probe) or `apply` (disruptor); any other
+//!   first message is answered `failed`. Later unexpected lines are logged
+//!   by the plugin and ignored.
+//! - `failed` may come at any time, also after `ready` (a worker died): a
+//!   disruptor reverts first, then reports it. The process exits next.
+//! - `stop` and `revert` both end the instance: a disruptor told `stop`
+//!   reverts, a probe told `revert` stops.
+//! - Exit status of `run`: 0 after `done`, 1 after `failed`.
+//! - The agent waits a bounded time (its own setting, typically 10 s) for
+//!   `ready` and for `done`; past it, it sends SIGTERM, then SIGKILL, and
+//!   for a disruptor runs `<plugin> revert <instance>`. `revert` must
+//!   therefore be idempotent and work from the saved state alone.
+//! - An instance name is non-empty, without `/`, `\`, NUL or a leading
+//!   `.`, so that it can name a state file.
+//!
 //! The agent dates, numbers and forwards the events: a plugin only names
 //! the kind and the data.
 
@@ -38,7 +55,9 @@ pub const PROTOCOL_VERSION: u32 = 1;
 /// file per instance. Set by the agent; it survives an agent restart but
 /// not necessarily a reboot.
 pub const ENV_STATE_DIR: &str = "REMORA_QA_STATE_DIR";
-/// The instance's name, also given in `start`/`apply`.
+/// The instance's name, as in `start`/`apply` (and the `revert`
+/// argument): set by the agent for plugins that need it before reading
+/// stdin, e.g. to name a log file. Plugins may ignore it.
 pub const ENV_INSTANCE: &str = "REMORA_QA_INSTANCE";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -77,7 +96,7 @@ pub struct PluginSpec {
     pub version: u32,
     pub kind: PluginKind,
     /// A disruptor's level; a probe has none.
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub level: Option<RiskLevel>,
     /// A disruptor's `revert` restores the state it changed.
     #[serde(default)]
@@ -139,7 +158,8 @@ pub enum PluginMessage {
     Log { level: LogLevel, message: String },
     /// Stopped or reverted: the process exits next.
     Done,
-    /// It could not start, apply or revert; the process exits next.
+    /// It could not start, apply or revert, or it broke while running;
+    /// the process exits next.
     Failed { error: String },
 }
 

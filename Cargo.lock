@@ -33,6 +33,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "remora-qa-plugin-example"
+version = "0.1.0"
+dependencies = [
+ "remora-qa-plugin-sdk",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "remora-qa-plugin-protocol"
 version = "0.1.0"
 dependencies = [
