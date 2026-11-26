@@ -1,0 +1,19 @@
+[package]
+name = "remora-qa-plugin-sdk"
+version = "0.1.0"
+description = "Write a Remora QA plugin (a probe or a disruptor) in Rust"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+name = "remora_qa_plugin_sdk"
+path = "src/lib.rs"
+
+[dependencies]
+remora-qa-plugin-protocol = { path = "../qa-plugin-protocol", version = "0.1.0" }
+serde.workspace = true
+serde_json.workspace = true
