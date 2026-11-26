@@ -1,0 +1,18 @@
+[package]
+name = "remora-qa-plugin-protocol"
+version = "0.1.0"
+description = "The contract between the Remora QA agent and an external plugin"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+name = "remora_qa_plugin_protocol"
+path = "src/lib.rs"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true

@@ -1,0 +1,15 @@
+# Rustfmt configuration for the workspace.
+hard_tabs = false
+tab_spaces = 4
+newline_style = "Unix"
+
+# Alphabetical, deterministic ordering — avoids noise from import/mod order alone in diffs.
+reorder_imports = true
+reorder_modules = true
+
+# Modern idiomatic shorthand.
+use_field_init_shorthand = true
+use_try_shorthand = true
+
+# Collapse multiple `#[derive(...)]` attributes on one item into a single attribute.
+merge_derives = true
