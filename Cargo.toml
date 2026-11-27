@@ -10,6 +10,9 @@ members = [
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/sntns/remora-qa-sdk"
+homepage = "https://github.com/sntns/remora-qa-sdk"
+keywords = ["remora", "qa", "testing", "plugin", "embedded"]
+categories = ["development-tools::testing", "embedded"]
 
 [workspace.dependencies]
 serde = { version = "1.0.228", features = ["derive"] }
@@ -21,3 +24,15 @@ dead_code = { level = "allow", priority = 1 }
 
 [workspace.lints.clippy]
 all = "warn"
+
+# Drives `cargo release` (see .github/workflows/release.yml and
+# PUBLISHING.md): one version for the published crates, one tag.
+[workspace.metadata.release]
+shared-version = true
+consolidate-commits = true
+publish = true
+push = true
+allow-branch = ["main"]
+pre-release-commit-message = "chore: release v{{version}}"
+tag-name = "v{{version}}"
+tag-message = "v{{version}}"

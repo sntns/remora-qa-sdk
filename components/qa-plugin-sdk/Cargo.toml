@@ -5,6 +5,10 @@ description = "Write a Remora QA plugin (a probe or a disruptor) in Rust"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
 
 [lints]
 workspace = true

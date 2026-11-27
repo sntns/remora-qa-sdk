@@ -1,5 +1,11 @@
 # remora-qa-sdk
 
+[![crates.io: protocol](https://img.shields.io/crates/v/remora-qa-plugin-protocol.svg?label=remora-qa-plugin-protocol)](https://crates.io/crates/remora-qa-plugin-protocol)
+[![crates.io: sdk](https://img.shields.io/crates/v/remora-qa-plugin-sdk.svg?label=remora-qa-plugin-sdk)](https://crates.io/crates/remora-qa-plugin-sdk)
+[![docs.rs](https://img.shields.io/docsrs/remora-qa-plugin-sdk)](https://docs.rs/remora-qa-plugin-sdk)
+[![CI](https://github.com/sntns/remora-qa-sdk/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sntns/remora-qa-sdk/actions/workflows/ci.yml)
+[![License](https://img.shields.io/crates/l/remora-qa-plugin-protocol.svg)](LICENSE)
+
 The public part of Remora QA, the test platform for Remora devices: what
 a **product pack** needs to extend it without access to Remora's private
 code.
@@ -22,7 +28,7 @@ code.
 ## Writing a plugin for a pack
 
 A plugin is a standalone crate in the pack, one executable per plugin,
-depending on the SDK by git URL and revision:
+depending on the SDK from crates.io:
 
 ```toml
 [package]
@@ -31,7 +37,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-remora-qa-plugin-sdk = { git = "https://github.com/sntns/remora-qa-sdk", rev = "<commit>" }
+remora-qa-plugin-sdk = "0.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ```
